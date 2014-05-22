@@ -1,0 +1,30 @@
+/* DEBUG OPTIONS */
+/*
+rect[sol="1"] {
+    fill: red;
+}
+*/
+
+/* MAIN */
+rect[flag="1"] {
+    fill: #ffcece;
+}
+g rect[flag="1"] {
+    fill: #ef9090;
+}
+rect:hover {
+    fill: #ccc;
+}
+rect[curr="1"] {
+    fill: #666;
+}
+rect[flag="1"]:hover {
+    fill: #ffadad;
+}
+rect[curr="1"]:hover {
+    fill: #6f6f6f;
+}
+
+g, rect, text {
+    cursor: pointer;
+}

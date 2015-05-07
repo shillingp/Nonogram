@@ -10,7 +10,7 @@ function nonogram() {
     gridStart = tileSize*2;
     gridSize = 10;
     bias = 0.75;
-//	bias = Math.pow(gridSize, -gridSize*1e-2);	Scales with grid
+    // bias = Math.pow(gridSize, -gridSize*1e-2);	// Scales with grid
     solGrid = [];
     currGrid = [];
 
@@ -145,7 +145,7 @@ function nonogram() {
             currGrid[i] = grid[i].getAttribute("curr");
         }
         if (currGrid.toString() == solGrid.toString()) {
-            document.getElementsByClassName("svgBanner")[0].style.visibility="visible";
+            document.getElementById("svgBanner").style.visibility = "visible";
         }
     }
 
@@ -168,11 +168,10 @@ function nonogram() {
     function toggleTile() {
         var a = event.target;
         if (a.getAttribute("curr") == 1) {
-            setAttributes(a,
-                          {
-                              "curr": 0,
-                              "flag": 0
-                          });
+            setAttributes(a, {
+                "curr": 0,
+                "flag": 0
+            });
         } else {
             a.setAttribute("curr", 1);
         }
@@ -214,16 +213,16 @@ function nonogram() {
         svg.parentElement.oncontextmenu = function(){return false;};
 		var maxSize = gridStart + (tileSize + gapWidth) * gridSize;
         svg.style.maxWidth = svg.style.maxHeight = maxSize;
-		setAttributes(svg,
-					  {
-						  "viewBox": "0,0,"+maxSize+","+maxSize,
-						  "preserveAspectRatio": "xMidYMid meet"
-					  });
-        setAttributes(document.getElementsByClassName("svgBanner")[0],
-                      {
-                          "onclick": "nonogram();",
-                          "style": "visibility:'hidden';"
-                      });
+		setAttributes(svg, {
+            "viewBox": "0,0,"+maxSize+","+maxSize,
+            "preserveAspectRatio": "xMidYMid meet"
+        });
+        
+        var banner = document.getElementById("svgBanner");
+        banner.onclick = function() {
+            nonogram();
+        };
+        banner.style.visibility = "hidden";
     }
 
     function gameManager() {

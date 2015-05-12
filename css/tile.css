@@ -58,3 +58,10 @@ rect[curr="1"]:hover {
 g, rect, text {
     cursor: pointer;
 }
+
+@media only screen and (max-width: 999px) {
+    #svg-element {
+        max-height: 100%!important;
+        max-width: 100%!important;
+    }
+}

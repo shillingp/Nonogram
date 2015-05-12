@@ -3,7 +3,7 @@
 var svg,mouseState,gapWidth,tileSize,gridStart,gridSize,bias,solGrid,currGrid;
 
 function nonogram() {
-    svg = document.getElementById("svgElement");
+    svg = document.getElementById("svg-element");
     mouseState = false;
     gapWidth = 5;
     tileSize = 35;
@@ -145,7 +145,7 @@ function nonogram() {
             currGrid[i] = grid[i].getAttribute("curr");
         }
         if (currGrid.toString() == solGrid.toString()) {
-            document.getElementById("svgBanner").style.visibility = "visible";
+            document.getElementById("svg-banner").style.visibility = "visible";
         }
     }
 
@@ -175,11 +175,34 @@ function nonogram() {
         } else {
             a.setAttribute("curr", 1);
         }
-        update();    
+        update();
     }
 
+    function mobileToggle() {
+        var a = event.target;
+        if (a.getAttribute("curr") == 1) {
+            setAttributes(a, {
+                "curr": 0,
+                "flag": 1
+            });
+        } else if (a.getAttribute("flag") == 1) {
+            a.setAttribute("flag", 0);
+        } else {
+            a.setAttribute("curr", 1);
+        }
+        update();
+    }
+    
+    function mobileCheck() {
+        if (isMobile.any) {
+            mobileToggle();
+        } else {
+            toggleTile();
+        }
+    }
+    
     function mouseClick() {
-        if (event.button === 0) toggleTile();
+        if (event.button === 0) mobileCheck();
         else if (event.button === 2) toggleFlag();
     }
 
@@ -193,19 +216,19 @@ function nonogram() {
         for (var i=0;i<grid.length;i++) {
             grid[i].onmousedown = mouseClick;
             grid[i].onmouseover = mouseDrag;
-            grid[i].addEventListener("touchstart", touchHandler, false);
-            grid[i].addEventListener("touchend", touchHandler, false);
+//            grid[i].addEventListener("touchstart", touchHandler, false);
+//            grid[i].addEventListener("touchend", touchHandler, false);
         }
     }
 
-    function touchHandler() {
-        var type = "";
-        switch (event.type) {
-            case "touchstart": type="mousedown";break;
-            case "touchend": type="mouseup";break;
-            default: return;
-        }
-    }
+//    function touchHandler() {
+//        var type = "";
+//        switch (event.type) {
+//            case "touchstart": type="mousedown";break;
+//            case "touchend": type="mouseup";break;
+//            default: return;
+//        }
+//    }
 
     function docSettings() {
         document.onmousedown = function(){mouseState=true;};
@@ -218,7 +241,7 @@ function nonogram() {
             "preserveAspectRatio": "xMidYMid meet"
         });
         
-        var banner = document.getElementById("svgBanner");
+        var banner = document.getElementById("svg-banner");
         banner.onclick = function() {
             nonogram();
         };
